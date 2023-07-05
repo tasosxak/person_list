@@ -57,10 +57,12 @@ def delete_person(person_id):
     Controller function for deleting an existing person record.
     Removes the specified person from the list.
     """
-    person = Person.query.get(person_id)
-    if person:
-        # Delete the person from the database and commit the changes
+    person = Person.query.get_or_404(person_id)
+
+    try:
         db.session.delete(person)
         db.session.commit()
         return True
-    return False
+    except:
+        db.session.rollback()
+        return False

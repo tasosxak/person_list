@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from config import CONFIG 
 from flask_migrate import Migrate
-
+from flask_wtf.csrf import CSRFProtect
 
 db = SQLAlchemy() # initializes the SQLAlchemy extension for db operations
 migrate = Migrate() # initializes database migration functionallity
@@ -13,6 +13,8 @@ def create_app(config_name):
 
     # load configuartion from CONFIG based on config_name
     app.config.from_object(CONFIG[config_name])
+
+    #csrf = CSRFProtect(app)
 
     # initialize application-specific configurations
     CONFIG[config_name].init_app(app)

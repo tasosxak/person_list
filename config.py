@@ -5,7 +5,8 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
+    SECRET_KEY = 'a super secret key'
+    
     @staticmethod
     def init_app(app):
         pass
