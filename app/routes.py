@@ -1,5 +1,6 @@
+from app.forms import PersonForm
 from . import create_app
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for, abort
 import os
 from .controllers import *
 import wtforms
@@ -12,20 +13,29 @@ def handle_csrf_error(e):
     return "CSRF Error - Invalid or missing CSRF token", 400
 """
 
-@app.route('/persons', methods=['POST'])
+@app.route('/persons/create', methods=['POST', 'GET'])
 def create_person_route():
-	name = request.form.get('name')
-	age = request.form.get('age')
-	street_name = request.form.get('street-name')
-	street_number = request.form.get('street_number')
-	email = request.form.get('email')
-	person = create_person(name, age, email, street_name, street_number)
-	if person:
-		flash('Person created successfully!', 'success')
-		return redirect(url_for('home'))
-	else:
-		flash('Failed to create person.', 'error')
-		return render_template('create_person.html')
+	form = PersonForm()
+	if request.method  == 'GET':
+		return render_template('create_person.html', form=form)
+	
+	if request.method == 'POST':
+		if form.validate_on_submit():
+			name = form.name.data
+			age = form.age.data
+			street_name = form.address.street_name.data
+			street_number = form.address.number.data
+			email = form.email.data
+			person = create_person(name, age, email, street_name, street_number)
+			if person:
+				flash('Person created successfully!', 'success')
+				return redirect(url_for('get_persons_route'))
+			else:
+				flash('Failed to create person.', 'error')
+				return render_template('create_person.html')
+		else:
+			flash('Failed to create person.', 'error')
+	return render_template('create_person.html', form=form)
 
 @app.route('/persons', methods=['GET'])
 def get_persons_route():
@@ -33,28 +43,48 @@ def get_persons_route():
 	per_page = 10
 	persons = get_persons(page,per_page)
 
-	return render_template('persons.html', persons=persons)
+	return render_template('list_person.html', persons=persons)
 
 
-@app.route('/persons/<int:person_id>', methods=['PUT'])
+@app.route('/persons/<int:person_id>/edit', methods=['POST', 'GET'])
 def update_person_route(person_id):
-    name = request.form.get('name')
-    age = request.form.get('age')
-    street_name = request.form.get('street-name')
-    street_number = request.form.get('street-number')
-    res = update_person(person_id, name, age, street_name, street_number)
+    
+	# retrieve the existing person from the database
+	person = Person.query.get_or_404(person_id)
 
-    return render_template('person.html', person=person)
+	# create a form instance and populate it with existing person's data
+	form  = PersonForm(obj=person)
+    
+	if form.validate_on_submit():
+		# update the person's data based on the form input 
+		form.populate_obj(person)
+		"""
+		person.name = form.name.data
+		person.age = form.age.data
+		person.email = form.email.data
+		person.address.name = form.address_name.data
+		person.address.number = form.address_number.data
+		"""
+		# call the controller function to update the person in the database
+		if update_person(person):
+			flash('{}\'s data updated sucessfully!'.format(person.name), 'sucess')
+			return redirect(url_for('get_persons_route'))    
+		else:
+			flash('Failed to update {}\'s data :('.format(person.name), 'error')
+			return redirect(url_for('get_persons_route'))
 
-@app.route('/persons/<int:person_id>', methods=['POST','DELETE'])
+	return render_template('edit_person.html', form=form,person=person)
+
+@app.route('/persons/<int:person_id>/delete', methods=['POST'])
 def delete_person_route(person_id):
 	
 	if  delete_person(person_id):
 		flash('Person deleted successfully!', 'success')
-		return redirect(url_for('home'))
 	else:
-	    flash('Failed to delete person.', 'error')
-	    return redirect(url_for('home'))
+		flash('Failed to delete person.', 'error')
+		abort(404)
+	
+	return redirect(url_for('get_persons_route'))
 
 @app.route('/')
 def home():

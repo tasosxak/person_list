@@ -31,15 +31,16 @@ def get_persons(page=1, per_page=10):
     persons = Person.query.paginate(page=page, per_page=per_page)
     return persons
 
-def update_person(person_id, name=None, age=None, street_name=None, street_number=None):
+def update_person(person):
     """
     Controller function for updating an existing person record.
     Modifies the provided fields: name, age, street_name or/and street number
     """
-    person = Person.query.get(person_id)
+    #person = Person.query.get(person_id)
 
     # update the fields if provided
     if person:
+        """
         if name:
             person.name = name
         if age:
@@ -48,6 +49,7 @@ def update_person(person_id, name=None, age=None, street_name=None, street_numbe
             person.address.street_name = street_name
         if street_number:
             person.address.number = street_number
+        """
         db.session.commit() # commit the changes to the database
         return True
     return False

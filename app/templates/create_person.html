@@ -1,0 +1,13 @@
+<form method="POST" action="{{ url_for('create_person_route') }}">
+    {{ form.hidden_tag() }} 
+    {{ form.name.label }}: {{ form.name() }}
+    {{ form.age.label }}: {{ form.age() }}
+    {{ form.email.label }}: {{ form.email() }}
+    {{ form.address.street_name.label }}: {{ form.address.street_name() }}
+    {{ form.address.number.label }}: {{ form.address.number() }}
+    {{ form.submit() }}
+</form>
+
+{% if form.errors %}
+{{ form.errors }}
+{% endif %}
