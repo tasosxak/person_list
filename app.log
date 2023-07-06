@@ -1,0 +1,82 @@
+2023-07-06T23:29:29.540062+0300 - INFO - Received request to update person with ID: 4
+2023-07-06T23:29:29.543928+0300 - INFO - Person fdf updated successfully
+2023-07-06T23:29:29.544282+0300 - INFO - Person with ID 4 updated successfully
+2023-07-06T23:29:29.554536+0300 - INFO - Received request to get persons. Search query: 
+2023-07-06T23:29:29.556200+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:29:41.972446+0300 - INFO - Received request to get persons. Search query: tasos
+2023-07-06T23:29:41.974920+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:29:44.522987+0300 - INFO - Received request to get persons. Search query: tas
+2023-07-06T23:29:44.524669+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:29:49.398919+0300 - INFO - Received request to get persons. Search query: an
+2023-07-06T23:29:49.400600+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:29:51.445967+0300 - INFO - Received request to get persons. Search query: fb
+2023-07-06T23:29:51.447465+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:29:53.095721+0300 - INFO - Received request to get persons. Search query: aa
+2023-07-06T23:29:53.097080+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:29:54.927134+0300 - INFO - Received request to get persons. Search query: fb
+2023-07-06T23:29:54.928743+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:29:56.012241+0300 - INFO - Received request to get persons. Search query: fd
+2023-07-06T23:29:56.013864+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:30:01.046286+0300 - INFO - Received request to delete person with ID: 3
+2023-07-06T23:30:01.055804+0300 - INFO - Person dfd deleted successfully
+2023-07-06T23:30:01.056153+0300 - INFO - Deletion of person with ID 3: Person deleted successfully!
+2023-07-06T23:30:01.064259+0300 - INFO - Received request to get persons. Search query: 
+2023-07-06T23:30:01.067237+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:30:02.460330+0300 - INFO - Received request to update person with ID: 4
+2023-07-06T23:30:02.460612+0300 - INFO - Rendering edit_person.html template for person with ID: 4
+2023-07-06T23:30:07.183813+0300 - INFO - Received request to update person with ID: 4
+2023-07-06T23:30:07.187648+0300 - INFO - Person fdf updated successfully
+2023-07-06T23:30:07.187992+0300 - INFO - Person with ID 4 updated successfully
+2023-07-06T23:30:07.193818+0300 - INFO - Received request to get persons. Search query: 
+2023-07-06T23:30:07.195340+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:30:09.229269+0300 - INFO - Received request to update person with ID: 6
+2023-07-06T23:30:09.229656+0300 - INFO - Rendering edit_person.html template for person with ID: 6
+2023-07-06T23:30:13.451891+0300 - INFO - Received request to update person with ID: 6
+2023-07-06T23:30:13.454531+0300 - WARNING - Email already exists for person ffd
+2023-07-06T23:30:13.454886+0300 - WARNING - Failed to update person with ID 6: Email already exists. Please choose a different email.
+2023-07-06T23:32:54.871039+0300 - INFO - Received request to get persons. Search query: 
+2023-07-06T23:32:54.876981+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:32:57.204018+0300 - INFO - User logout initiated
+2023-07-06T23:32:57.204388+0300 - INFO - User logout successful
+2023-07-06T23:32:57.209830+0300 - INFO - User login initiated
+2023-07-06T23:32:59.571442+0300 - INFO - User login initiated
+2023-07-06T23:32:59.575895+0300 - WARNING - Invalid username or password
+2023-07-06T23:32:59.576231+0300 - WARNING - User login failed: Invalid username or password
+2023-07-06T23:33:00.864186+0300 - INFO - User login initiated
+2023-07-06T23:33:14.295430+0300 - INFO - User login initiated
+2023-07-06T23:33:14.298371+0300 - INFO - User liquid logged in successfully
+2023-07-06T23:33:14.298769+0300 - INFO - User login successful, redirecting to get_persons_route
+2023-07-06T23:33:14.310555+0300 - INFO - Received request to get persons. Search query: 
+2023-07-06T23:33:14.314087+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:33:15.424104+0300 - INFO - Received request to add a new person
+2023-07-06T23:33:15.425275+0300 - INFO - Rendering create_person.html template
+2023-07-06T23:33:31.509334+0300 - INFO - Received request to add a new person
+2023-07-06T23:33:31.520103+0300 - INFO - Person fdd added successfully in the database.
+2023-07-06T23:33:31.520454+0300 - INFO - Redirecting to person list after person creation
+2023-07-06T23:33:31.530366+0300 - INFO - Received request to get persons. Search query: 
+2023-07-06T23:33:31.532829+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:33:32.870342+0300 - INFO - Received request to add a new person
+2023-07-06T23:33:32.871000+0300 - INFO - Rendering create_person.html template
+2023-07-06T23:33:38.127212+0300 - INFO - Received request to add a new person
+2023-07-06T23:33:38.130958+0300 - WARNING - Email already exists for person fdfd
+2023-07-06T23:33:38.131426+0300 - WARNING - Failed to create person
+2023-07-06T23:34:08.129705+0300 - INFO - Received request to get persons. Search query: 
+2023-07-06T23:34:08.134120+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:34:09.844131+0300 - INFO - Received request to update person with ID: 6
+2023-07-06T23:34:09.844427+0300 - INFO - Rendering edit_person.html template for person with ID: 6
+2023-07-06T23:34:13.762521+0300 - INFO - Received request to update person with ID: 6
+2023-07-06T23:34:13.765315+0300 - WARNING - Email already exists for person ffd
+2023-07-06T23:34:13.765774+0300 - WARNING - Failed to update person with ID 6: Email already exists. Please choose a different email.
+2023-07-06T23:34:14.997088+0300 - INFO - Received request to get persons. Search query: 
+2023-07-06T23:34:14.998535+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:34:18.742303+0300 - INFO - Received request to get persons. Search query: 
+2023-07-06T23:34:18.744185+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:34:23.441330+0300 - INFO - Received request to get persons. Search query: tasos
+2023-07-06T23:34:23.443556+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:34:25.952670+0300 - INFO - Received request to get persons. Search query: fdfd
+2023-07-06T23:34:25.954106+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:34:28.523251+0300 - INFO - Received request to get persons. Search query: fdssdsfdfsdfds
+2023-07-06T23:34:28.524730+0300 - INFO - Paginated persons retrieved successfully
+2023-07-06T23:34:30.423342+0300 - INFO - User logout initiated
+2023-07-06T23:34:30.423955+0300 - INFO - User logout successful
+2023-07-06T23:34:30.427878+0300 - INFO - User login initiated

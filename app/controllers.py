@@ -3,7 +3,7 @@ from app.models import Person, Address, User
 from app import db
 from sqlalchemy import or_
 from flask_login import login_user
-
+from loguru import logger
 
 def create_person(form):
     """
@@ -27,13 +27,16 @@ def create_person(form):
         db.session.add(address)
         db.session.add(person)
         db.session.commit()
+        logger.info('Person {} added successfully in the database.'.format(person.name))
         return {'object': person, "message": 'Person created successfully!'}
-    except IntegrityError:
+    except IntegrityError as e:
         db.session.rollback()
         #error_message = str(e)
+        logger.warning("Email already exists for person {}".format(person.name))
         # error that there is already a person using the same email address
         return {'object': None, "message": "Email already exists. Please choose a different email."}
-    except SQLAlchemyError:
+    except SQLAlchemyError as e:
+        logger.error(f"Failed to add {person.name} in the database: {str(e)}")
         return {'object': None, "message": "Something went wrong :/"}
 
 def get_persons(page=1, per_page=10, search_query=None):
@@ -42,10 +45,15 @@ def get_persons(page=1, per_page=10, search_query=None):
     Retrieves a paginated list of persons from the database 
     """
 
-    # Query the database for paginated persons
-    persons = Person.query.filter(or_(Person.name.ilike(f'%{search_query}%'), Person.email.ilike(f'%{search_query}%'))).paginate(page=page, per_page=per_page)
-    #persons = Person.query.paginate(page=page, per_page=per_page)
-    return persons
+    try:
+        # Query the database for paginated persons
+        persons = Person.query.filter(or_(Person.name.ilike(f'%{search_query}%'), Person.email.ilike(f'%{search_query}%'))).paginate(page=page, per_page=per_page)
+        #persons = Person.query.paginate(page=page, per_page=per_page)
+        logger.info("Paginated persons retrieved successfully")
+        return persons
+    except Exception as e:
+        logger.error("Failed to retrieve paginated persons: {}".format(str(e)))
+        return None
 
 def update_person(form, person):
     """
@@ -57,12 +65,15 @@ def update_person(form, person):
         form.populate_obj(person)
         try:
             db.session.commit() # commit the changes to the database
+            logger.info("Person {} updated successfully".format(person.name))
             return  {'object': person, 'message' :'{}\'s data updated sucessfully!'.format(person.name)}
         except IntegrityError:
             db.session.rollback()
             # error that there is already a person using the same email address
+            logger.warning("Email already exists for person {}".format(person.name))
             return {'object': None, "message": "Email already exists. Please choose a different email."}
-        except SQLAlchemyError:
+        except SQLAlchemyError as e:
+            logger.error("Failed to update person {} in the database: {}".format(person.name, str(e)))
             return {'object': None, "message": "Something went wrong :/"}
         
     return { 'object': None, 'message': 'Failed to update {}\'s data :('.format(person.name)}
@@ -77,9 +88,11 @@ def delete_person(person_id):
     try:
         db.session.delete(person)
         db.session.commit()
+        logger.info("Person {} deleted successfully".format(person.name))
         return {'message': 'Person deleted successfully!', 'type': 'success'}
     except:
         db.session.rollback()
+        logger.error("Failed to delete person {} from the database: {}".format(person.name, str(e)))
         return {'message': 'Failed to delete person.', 'type': 'error'}
     
 
@@ -93,6 +106,8 @@ def authenticate_user(form):
     user = User.query.filter_by(username=username).first()
     if user and user.password == password: # simple plain password check
         login_user(user)
+        logger.info("User {} logged in successfully".format(user.username))
         return {'object': user, 'message': 'The user logged in successfully', 'type': 'success'}
     else:
+         logger.warning("Invalid username or password")
          return {'object': user, 'message': 'Invalid username or password', 'type': 'error'}
