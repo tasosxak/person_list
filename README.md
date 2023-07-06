@@ -17,7 +17,11 @@ This is a Flask application that allows you to manage persons data.
 
 `cd person_list`
 
-3. Build the Docker image:
+3. If you're running on macOS, start the Colima service by running the following command:
+
+`colima start`
+
+4. Build the Docker image:
 
 `docker image build -t flask_docker .`
 
@@ -34,11 +38,7 @@ This is a Flask application that allows you to manage persons data.
 
 ## Run
 
-1. If you're running on macOS, start the Colima service by running the following command:
-
-`colima start`
-
-2. Run the Docker container:
+1. Run the Docker container:
 
 `docker run -p 8000:8000 -d flask_docker`
 
