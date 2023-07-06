@@ -3,7 +3,6 @@ from . import create_app
 from flask import render_template, request, flash, redirect, url_for, abort
 import os
 from .controllers import *
-import wtforms
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default_config')
 
@@ -39,10 +38,13 @@ def create_person_route():
 
 @app.route('/persons', methods=['GET'])
 def get_persons_route():
-	page = request.args.get('page', 1, type=int)
-	per_page = 10
-	persons = get_persons(page,per_page)
+	search_query = request.args.get('search', '') # get the search query from the request
+	page = request.args.get('page', 1, type=int) # get the current page from the query parameters or default to 1
+	per_page = 10 # set the number of items per page to 10
 
+	# get paginated list of persons with optional search query
+	persons = get_persons(page,per_page , search_query)
+	
 	return render_template('list_person.html', persons=persons)
 
 

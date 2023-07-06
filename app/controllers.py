@@ -1,6 +1,6 @@
 from app.models import Person, Address
 from app import db
-
+from sqlalchemy import or_
 
 def create_person(name, age, email, street_name, street_number):
     """
@@ -21,14 +21,15 @@ def create_person(name, age, email, street_name, street_number):
 
     return person
 
-def get_persons(page=1, per_page=10):
+def get_persons(page=1, per_page=10, search_query=None):
     """
     Controller function for getting the list of persons with pagination support.
     Retrieves a paginated list of persons from the database 
     """
 
     # Query the database for paginated persons
-    persons = Person.query.paginate(page=page, per_page=per_page)
+    persons = Person.query.filter(or_(Person.name.ilike(f'%{search_query}%'), Person.email.ilike(f'%{search_query}%'))).paginate(page=page, per_page=per_page)
+    #persons = Person.query.paginate(page=page, per_page=per_page)
     return persons
 
 def update_person(person):

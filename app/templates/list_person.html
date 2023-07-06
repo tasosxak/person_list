@@ -11,6 +11,17 @@
       <a href="{{ url_for('create_person_route') }}" class="button is-primary">Add</a>
     </div>
   </div>
+
+  <form method="GET" action="{{ url_for('get_persons_route') }}">
+    <div class="field is-grouped">
+      <p class="control">
+        <input class="input" type="text" name="search" placeholder="Search by name or email" value="{{ search_query }}">
+      </p>
+      <p class="control">
+        <button class="button is-primary" type="submit">Search</button>
+      </p>
+    </div>
+  </form>
   
   {% if persons.items %}
   <ul class="box">
