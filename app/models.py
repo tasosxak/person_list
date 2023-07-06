@@ -16,7 +16,7 @@ class Person(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(), nullable = False)
     age = db.Column(db.Integer(), nullable = False)
-    email = db.Column(db.String(), nullable = False)
+    email = db.Column(db.String(), unique=True, nullable = False)
     #address = db.Column(db.String(), nullable = False)
     address_id = db.Column(db.Integer, db.ForeignKey('address.id', ondelete='CASCADE'), nullable=False)
     address = db.relationship('Address', backref='person', uselist=False, cascade="all,delete")

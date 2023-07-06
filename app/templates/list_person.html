@@ -34,10 +34,10 @@
           <div class="column">{{ person.address.street_name }}</div>
           <div class="column">{{ person.address.number }}</div>
           <div class="column has-text-right">
-            <form method="POST" action="{{ url_for('update_person_route', person_id=person.id) }}">
+            <a href="{{ url_for('update_person_route', person_id=person.id) }}">
               <input type="hidden" name="_method" value="EDIT">
               <button class="button is-info" type="submit">Edit</button>
-            </form>
+            </a>
           </div>
           <div class="column has-text-right">
             <form method="POST" action="{{ url_for('delete_person_route', person_id=person.id) }}">

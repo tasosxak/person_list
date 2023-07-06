@@ -20,20 +20,15 @@ def create_person_route():
 	
 	if request.method == 'POST':
 		if form.validate_on_submit():
-			name = form.name.data
-			age = form.age.data
-			street_name = form.address.street_name.data
-			street_number = form.address.number.data
-			email = form.email.data
-			person = create_person(name, age, email, street_name, street_number)
-			if person:
-				flash('Person created successfully!', 'success')
+			res = create_person(form)
+			if res['object']:
+				flash(res['message'], 'success')
 				return redirect(url_for('get_persons_route'))
 			else:
-				flash('Failed to create person.', 'error')
-				return render_template('create_person.html')
+				flash(res['message'], 'error')
+				return render_template('create_person.html', form=form)
 		else:
-			flash('Failed to create person.', 'error')
+			flash('There are errors in the form. Please review and correct them.', 'error')
 	return render_template('create_person.html', form=form)
 
 @app.route('/persons', methods=['GET'])
@@ -57,25 +52,23 @@ def update_person_route(person_id):
 	# create a form instance and populate it with existing person's data
 	form  = PersonForm(obj=person)
     
-	if form.validate_on_submit():
-		# update the person's data based on the form input 
-		form.populate_obj(person)
-		"""
-		person.name = form.name.data
-		person.age = form.age.data
-		person.email = form.email.data
-		person.address.name = form.address_name.data
-		person.address.number = form.address_number.data
-		"""
-		# call the controller function to update the person in the database
-		if update_person(person):
-			flash('{}\'s data updated sucessfully!'.format(person.name), 'sucess')
-			return redirect(url_for('get_persons_route'))    
-		else:
-			flash('Failed to update {}\'s data :('.format(person.name), 'error')
-			return redirect(url_for('get_persons_route'))
+	if request.method == 'GET':
+		return render_template('edit_person.html', form=form, person=person)
+	
+	if request.method == 'POST':
+		if form.validate_on_submit():
 
-	return render_template('edit_person.html', form=form,person=person)
+			# update the person's data based on the form input 
+			res = update_person(form,person)
+			if res['object']:
+				flash(res['message'], 'sucess')
+				return redirect(url_for('get_persons_route'))    
+			else:
+				flash(res['message'], 'error')
+				return render_template('edit_person.html', form=form, person=person)
+		else:
+			flash('There are errors in the form. Please review and correct them.', 'error')
+			return render_template('edit_person.html', form=form, person=person)
 
 @app.route('/persons/<int:person_id>/delete', methods=['POST'])
 def delete_person_route(person_id):
