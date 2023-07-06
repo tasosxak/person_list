@@ -11,4 +11,4 @@ $ docker image build -t flask_docker .
 
 # Run
 
-$ docker run -p 5000:5000 -d flask_docker
+$ docker run -p 8000:8000 -d flask_docker
