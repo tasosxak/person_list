@@ -26,14 +26,19 @@ This is a Flask application that allows you to manage persons data.
 
 - You can configure the application by modifying the `config.py` file. Update the database details, secret key and any other configuration options as needed.
 
-- Create a .env file with the `FLASK_APP` environment variable set to `main.py`:
+- Create a `.env` file  in the project root directory with the `FLASK_APP` environment variable set to `main.py` and FLASK_RUN_PORT set to `8000`:
 
 `FLASK_APP=main.py`
+`FLASK_RUN_PORT=8000`
 
 
 ## Run
 
-1. Run the Docker container:
+1. If you're running on macOS, start the Colima service by running the following command:
+
+`colima start`
+
+2. Run the Docker container:
 
 `docker run -p 8000:8000 -d flask_docker`
 
