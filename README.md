@@ -4,8 +4,8 @@ This is a Flask application that allows you to manage persons data.
 
 ## Prerequisites
 
-> Docker: Install Docker on your machine.
-> Colima (Mac only): Install Colima for Docker management.
+- Docker: Install Docker on your machine.
+- Colima (Mac only): Install Colima for Docker management.
 
 ## Installation
 
