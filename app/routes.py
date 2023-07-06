@@ -1,8 +1,9 @@
-from app.forms import PersonForm
+from app.forms import LoginForm, PersonForm
 from . import create_app
-from flask import render_template, request, flash, redirect, url_for, abort
+from flask import render_template, request, flash, redirect, url_for
 import os
 from .controllers import *
+from flask_login import current_user, login_required, logout_user
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default_config')
 
@@ -13,6 +14,7 @@ def handle_csrf_error(e):
 """
 
 @app.route('/persons/create', methods=['POST', 'GET'])
+@login_required
 def create_person_route():
 	form = PersonForm()
 	if request.method  == 'GET':
@@ -32,6 +34,7 @@ def create_person_route():
 	return render_template('create_person.html', form=form)
 
 @app.route('/persons', methods=['GET'])
+@login_required
 def get_persons_route():
 	search_query = request.args.get('search', '') # get the search query from the request
 	page = request.args.get('page', 1, type=int) # get the current page from the query parameters or default to 1
@@ -44,6 +47,7 @@ def get_persons_route():
 
 
 @app.route('/persons/<int:person_id>/edit', methods=['POST', 'GET'])
+@login_required
 def update_person_route(person_id):
     
 	# retrieve the existing person from the database
@@ -71,12 +75,46 @@ def update_person_route(person_id):
 			return render_template('edit_person.html', form=form, person=person)
 
 @app.route('/persons/<int:person_id>/delete', methods=['POST'])
+@login_required
 def delete_person_route(person_id):
-	res = delete_person(person_id)
-	flash('Person deleted successfully!', res['type'])
 	
+	res = delete_person(person_id) # delete the person if exists
+	flash(res['message'], res['type'])
+
 	return redirect(url_for('get_persons_route'))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+
+	if current_user.is_authenticated:
+		return redirect(url_for('get_persons_route'))
+
+	form = LoginForm()
+
+	if request.method == 'GET':
+		return render_template('login.html', form=form)
+	
+	if request.method == 'POST':
+		if form.validate_on_submit():
+			res = authenticate_user(form)
+			if res['object']:
+				return redirect(url_for('get_persons_route'))
+			else:
+				return render_template('login.html', form=form, error=res['message'])
+	
+	return render_template('login.html', form=form)
+	
+
+@app.route('/logout')
+@login_required
+def logout():
+	logout_user()
+	return redirect(url_for('login'))
+
 
 @app.route('/')
 def home():
-	return render_template('index.html')
+	if current_user.is_authenticated:
+		return redirect(url_for('get_persons_route'))
+	return redirect(url_for('login'))

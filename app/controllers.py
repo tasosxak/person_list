@@ -1,7 +1,9 @@
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from app.models import Person, Address
+from app.models import Person, Address, User
 from app import db
 from sqlalchemy import or_
+from flask_login import login_user
+
 
 def create_person(form):
     """
@@ -79,3 +81,18 @@ def delete_person(person_id):
     except:
         db.session.rollback()
         return {'message': 'Failed to delete person.', 'type': 'error'}
+    
+
+def authenticate_user(form):
+    """
+    Controller function for verifying user credentials and logging the user in
+    """
+    username = form.username.data
+    password = form.password.data 
+
+    user = User.query.filter_by(username=username).first()
+    if user and user.password == password: # simple plain password check
+        login_user(user)
+        return {'object': user, 'message': 'The user logged in successfully', 'type': 'success'}
+    else:
+         return {'object': user, 'message': 'Invalid username or password', 'type': 'error'}

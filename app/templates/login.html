@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="columns is-centered">
+    <div class="column is-one-quarter">
+      <h1 class="title">Login</h1>
+      <form method="POST" action="{{ url_for('login') }}">
+        {{ form.hidden_tag() }}
+        <div class="field">
+          <label class="label">{{ form.username.label }}</label>
+          <div class="control">
+            {{ form.username(class="input") }}
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">{{ form.password.label }}</label>
+          <div class="control">
+            {{ form.password(class="input") }}
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            {{ form.submit(class="button is-primary") }}
+          </div>
+        </div>
+      </form>
+
+      {% if error %}
+      <div class="notification is-danger mt-4">
+        {{ error }}
+      </div>
+    {% endif %}
+    </div>
+  </div>
+{% endblock %}

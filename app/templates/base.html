@@ -8,6 +8,7 @@
 <body>
     <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
+           
             <a class="navbar-item" href="#">
                 Person List
             </a>
@@ -16,6 +17,18 @@
             <div class="navbar-start">
                 <a class="navbar-item" href="{{ url_for('get_persons_route') }}">Persons</a>
                 
+            </div>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                {% if current_user.is_authenticated %}
+                <div class="buttons">
+                    <a href="{{ url_for('logout') }}" class="button is-primary">
+                        Logout
+                    </a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </nav>
@@ -34,6 +47,14 @@
         {% block content %}{% endblock %}
     </div>
 
+    <footer class="footer" style="background: transparent;">
+        <div class="content has-text-centered">
+            <p>🛠️ by Tasos Temperekidis</p>
+        </div>
+    </footer>
+
     {% block scripts %}{% endblock %}
+
+
 </body>
 </html>

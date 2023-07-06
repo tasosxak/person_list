@@ -1,7 +1,11 @@
 from flask_wtf import FlaskForm, Form
-from wtforms import StringField, IntegerField, SubmitField,FormField,EmailField
+from wtforms import StringField, IntegerField, SubmitField, FormField, EmailField, PasswordField
 from wtforms.validators import DataRequired
 
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Sign in')
 
 class AddressForm(Form):
     street_name = StringField('Address Name', validators=[DataRequired('Please enter your street name')])

@@ -13,7 +13,7 @@
   </div>
 
   <form method="GET" action="{{ url_for('get_persons_route') }}">
-    <div class="field is-grouped">
+    <div class="field is-grouped mt-4 mb-4">
       <p class="control">
         <input class="input" type="text" name="search" placeholder="Search by name or email" value="{{ search_query }}">
       </p>
@@ -53,7 +53,7 @@
     {% endif %}
   </ul>
 
-  <div class="pagination">
+  <div class="pagination mt-4 mb-4">
     {% if persons.has_prev %}
       <a class="pagination-previous" href="{{ url_for('get_persons_route', page=persons.prev_num) }}">Previous</a>
     {% endif %}

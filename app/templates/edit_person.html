@@ -43,14 +43,11 @@
       </div>
     </div>
   </form>
-
-  {% if form.name.errors %}
-    <ul class="errors">
-      {% for error in form.name.errors %}
-        <li>{{ error }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+    {% if form.errors %}
+      <div class="notification is-danger">
+          {{ form.errors }}
+      </div>
+    {% endif %}
   </div>
   </div>
 {% endblock %}
