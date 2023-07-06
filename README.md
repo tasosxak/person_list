@@ -17,14 +17,6 @@ This is a Flask application that allows you to manage persons data.
 
 `cd person_list`
 
-3. If you're running on macOS, start the Colima service by running the following command:
-
-`colima start`
-
-4. Build the Docker image:
-
-`docker image build -t flask_docker .`
-
 
 ## Configuration
 
@@ -32,8 +24,20 @@ This is a Flask application that allows you to manage persons data.
 
 - Create a `.env` file  in the project root directory with the `FLASK_APP` environment variable set to `main.py` and FLASK_RUN_PORT set to `8000`:
 
-`FLASK_APP=main.py`
-`FLASK_RUN_PORT=8000`
+```
+FLASK_APP=main.py
+FLASK_RUN_PORT=8000
+```
+
+## Build 
+
+1. If you're running on macOS, start the Colima service by running the following command:
+
+`colima start`
+
+2. Build the Docker image:
+
+`docker image build -t flask_docker .`
 
 
 ## Run
