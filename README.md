@@ -50,6 +50,8 @@ FLASK_RUN_PORT=8000
 
 Open your web browser and go to  `http://localhost:8000` to access the application.
 
+3. Login credentials: `username:liquid` and `password:cloud`.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
