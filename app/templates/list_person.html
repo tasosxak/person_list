@@ -3,56 +3,66 @@
 {% block title %}List Persons{% endblock %}
 
 {% block content %}
-  <h1 class="title">List of Persons</h1> <a href="{{ url_for('create_person_route') }}" class="button is-primary">+</a>
+  <div class="columns is-vcentered">
+    <div class="column">
+      <h1 class="title">List of Persons</h1>
+    </div>
+    <div class="column is-narrow">
+      <a href="{{ url_for('create_person_route') }}" class="button is-primary">Add</a>
+    </div>
+  </div>
+  
+  {% if persons.items %}
   <ul class="box">
     {% for person in persons.items %}
-    <li class="notification">
-      <div class="columns is-mobile is-vcentered">
-        <div class="column">{{ person.name }}</div>
-        <div class="column">{{ person.age }}</div>
-        <div class="column">{{ person.email }}</div>
-        <div class="column">{{ person.address.street_name }}</div>
-        <div class="column">{{ person.address.number }}</div>
-        <div class="column">
-          <form method="POST" action="{{ url_for('delete_person_route', person_id=person.id) }}">
-            <input type="hidden" name="_method" value="DELETE">
-            <button class="button is-danger" type="submit">Delete</button>
-          </form>
+      <li class="notification">
+        <div class="columns is-mobile is-vcentered">
+          <div class="column">{{ person.name }}</div>
+          <div class="column">{{ person.age }}</div>
+          <div class="column">{{ person.email }}</div>
+          <div class="column">{{ person.address.street_name }}</div>
+          <div class="column">{{ person.address.number }}</div>
+          <div class="column has-text-right">
+            <form method="POST" action="{{ url_for('update_person_route', person_id=person.id) }}">
+              <input type="hidden" name="_method" value="EDIT">
+              <button class="button is-info" type="submit">Edit</button>
+            </form>
+          </div>
+          <div class="column has-text-right">
+            <form method="POST" action="{{ url_for('delete_person_route', person_id=person.id) }}">
+              <input type="hidden" name="_method" value="DELETE">
+              <button class="button is-danger" type="submit">Delete</button>
+            </form>
+          </div>
         </div>
-        <div class="column">
-          <form method="POST" action="{{ url_for('delete_person_route', person_id=person.id) }}">
-            <input type="hidden" name="_method" value="DELETE">
-            <button class="button is-danger" type="submit">Delete</button>
-          </form>
-        </div>
-      </div>
-    </li>
+      </li>
     {% endfor %}
+    {% else %}
+    <p>No persons available.</p>
+    {% endif %}
   </ul>
 
-    
-    <div class="pagination">
-      {% if persons.has_prev %}
-      <a href="{{ url_for('get_persons_route', page=persons.prev_num) }}">Previous</a>
-      {% endif %}
-      
+  <div class="pagination">
+    {% if persons.has_prev %}
+      <a class="pagination-previous" href="{{ url_for('get_persons_route', page=persons.prev_num) }}">Previous</a>
+    {% endif %}
+
+    <ul class="pagination-list">
       {% for page in persons.iter_pages() %}
         {% if page %}
           {% if page == persons.page %}
-            <span class="current-page">{{ page }}</span>
+            <li><a class="pagination-link is-current">{{ page }}</a></li>
           {% else %}
-            <a href="{{ url_for('get_persons_route', page=page) }}">{{ page }}</a>
+            <li><a class="pagination-link" href="{{ url_for('get_persons_route', page=page) }}">{{ page }}</a></li>
           {% endif %}
         {% else %}
-          <span class="ellipsis">...</span>
+          <li><span class="pagination-ellipsis">&hellip;</span></li>
         {% endif %}
       {% endfor %}
-      
-      {% if persons.has_next %}
-      <a href="{{ url_for('get_persons_route', page=persons.next_num) }}">Next</a>
-      {% endif %}
-    </div>
-    
+    </ul>
+
+    {% if persons.has_next %}
+      <a class="pagination-next" href="{{ url_for('get_persons_route', page=persons.next_num) }}">Next</a>
+    {% endif %}
+  </div>
 {% endblock %}
-
-

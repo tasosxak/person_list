@@ -1,25 +1,56 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Edit Person</title>
-  </head>
-  <body>
-    <form method="POST" action="{{ url_for('update_person_route', person_id=person.id) }}">
-      {{ form.hidden_tag() }}
-      {{ form.name.label }}: {{ form.name() }}
-      {{ form.age.label }}: {{ form.age() }}
-      {{ form.email.label }}: {{ form.email() }}
-      {{ form.address.street_name.label }}: {{ form.address.street_name() }}
-      {{ form.address.number.label }}: {{ form.address.number() }}
-      {{ form.submit() }}
+{% extends 'base.html' %}
+
+{% block title %}Edit Person{% endblock %}
+
+{% block content %}
+<div class="columns is-centered">
+  <div class="column is-half">
+  <form method="POST" action="{{ url_for('update_person_route', person_id=person.id) }}" class="section">
+    {{ form.hidden_tag() }}
+    <div class="field">
+      <label class="label">{{ form.name.label }}</label>
+      <div class="control">
+        {{ form.name(class="input") }}
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">{{ form.age.label }}</label>
+      <div class="control">
+        {{ form.age(class="input") }}
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">{{ form.email.label }}</label>
+      <div class="control">
+        {{ form.email(class="input") }}
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">{{ form.address.street_name.label }}</label>
+      <div class="control">
+        {{ form.address.street_name(class="input") }}
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">{{ form.address.number.label }}</label>
+      <div class="control">
+        {{ form.address.number(class="input") }}
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        {{ form.submit(class="button is-primary") }}
+      </div>
+    </div>
   </form>
 
   {% if form.name.errors %}
     <ul class="errors">
-    {% for error in form.name.errors %}
+      {% for error in form.name.errors %}
         <li>{{ error }}</li>
-    {% endfor %}
+      {% endfor %}
     </ul>
-{% endif %}
-  </body>
-</html>
+  {% endif %}
+  </div>
+  </div>
+{% endblock %}

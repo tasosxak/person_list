@@ -1,13 +1,56 @@
-<form method="POST" action="{{ url_for('create_person_route') }}">
-    {{ form.hidden_tag() }} 
-    {{ form.name.label }}: {{ form.name() }}
-    {{ form.age.label }}: {{ form.age() }}
-    {{ form.email.label }}: {{ form.email() }}
-    {{ form.address.street_name.label }}: {{ form.address.street_name() }}
-    {{ form.address.number.label }}: {{ form.address.number() }}
-    {{ form.submit() }}
-</form>
+{% extends "base.html" %}
 
-{% if form.errors %}
-{{ form.errors }}
-{% endif %}
+{% block title %}
+    Create Person
+{% endblock %}
+
+{% block content %}
+    <div class="columns is-centered">
+        <div class="column is-half">
+            <form method="POST" action="{{ url_for('create_person_route') }}">
+                {{ form.hidden_tag() }} 
+                <div class="field">
+                    <label class="label">Name</label>
+                    <div class="control">
+                        {{ form.name(class="input", placeholder="Enter your name") }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Age</label>
+                    <div class="control">
+                        {{ form.age(class="input", placeholder="Enter your age") }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Email</label>
+                    <div class="control">
+                        {{ form.email(class="input", placeholder="Enter your email address") }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Address Name</label>
+                    <div class="control">
+                        {{ form.address.street_name(class="input", placeholder="Enter your street name") }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Address Number</label>
+                    <div class="control">
+                        {{ form.address.number(class="input", placeholder="Enter your street number") }}
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        {{ form.submit(class="button is-primary is-fullwidth", value="Submit") }}
+                    </div>
+                </div>
+            </form>
+
+            {% if form.errors %}
+                <div class="notification is-danger">
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

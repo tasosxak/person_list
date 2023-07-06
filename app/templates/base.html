@@ -8,20 +8,19 @@
 <body>
     <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="navbar-item" href="{{ url_for('home') }}">
+            <a class="navbar-item" href="#">
                 Person List
             </a>
         </div>
         <div class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" href="{{ url_for('home') }}">Home</a>
                 <a class="navbar-item" href="{{ url_for('get_persons_route') }}">Persons</a>
-                <!-- Add more navigation links as needed -->
+                
             </div>
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container" style="padding-top: 30px;">
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <div class="notification">
