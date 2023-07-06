@@ -72,12 +72,8 @@ def update_person_route(person_id):
 
 @app.route('/persons/<int:person_id>/delete', methods=['POST'])
 def delete_person_route(person_id):
-	
-	if  delete_person(person_id):
-		flash('Person deleted successfully!', 'success')
-	else:
-		flash('Failed to delete person.', 'error')
-		abort(404)
+	res = delete_person(person_id)
+	flash('Person deleted successfully!', res['type'])
 	
 	return redirect(url_for('get_persons_route'))
 

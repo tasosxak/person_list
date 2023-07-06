@@ -75,7 +75,7 @@ def delete_person(person_id):
     try:
         db.session.delete(person)
         db.session.commit()
-        return True
+        return {'message': 'Person deleted successfully!', 'type': 'success'}
     except:
         db.session.rollback()
-        return False
+        return {'message': 'Failed to delete person.', 'type': 'error'}
